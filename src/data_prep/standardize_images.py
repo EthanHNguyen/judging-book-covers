@@ -20,7 +20,7 @@ test = test.to_numpy()
 # Load images with multiprocessing
 def load_image(row):
     img = cv2.imread('../../data/book-dataset/img/' + row[1])
-    img = cv2.resize(img, (128, 128))
+    img = cv2.resize(img, (64, 64))
     return img
 
 

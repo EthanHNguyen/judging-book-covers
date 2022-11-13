@@ -10,7 +10,7 @@ df.columns = ["asin", "filename", "image_url", "title", "author", "cat_id", "cat
 
 
 # Split into train and val
-train = df.sample(frac=0.8, random_state=200)
+train = df.sample(frac=0.9, random_state=200)
 val = df.drop(train.index)
 
 # Save to CSV
