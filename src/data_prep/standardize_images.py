@@ -1,5 +1,5 @@
 """
-Standardize and downsample images for svm.
+Standardize and downscale images for svm.
 """
 
 import pandas as pd
