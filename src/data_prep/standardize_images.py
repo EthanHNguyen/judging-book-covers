@@ -6,6 +6,7 @@ import pandas as pd
 import numpy as np
 import cv2
 import multiprocessing as mp
+from sklearn.decomposition import PCA
 
 # Load labels
 train = pd.read_csv('../../data/book-dataset/book30-listing-train-train.csv')
@@ -20,21 +21,22 @@ test = test.to_numpy()
 # Load images with multiprocessing
 def load_image(row):
     img = cv2.imread('../../data/book-dataset/img/' + row[1])
-    img = cv2.resize(img, (64, 64))
+    img = cv2.resize(img, (64, 64)) 
     return img
 
 
 if __name__ == '__main__':
     train_mean, train_std = None, None
+    pca = PCA(n_components=0.95)
     for data, name in [(train, "train"), (val, "val"), (test, "test")]:
         # Load images
-        with mp.Pool(mp.cpu_count() * 2) as pool:
+        with mp.Pool(mp.cpu_count() * 4) as pool:
             X = pool.map(load_image, data)
         X = np.array(X)
         Y = data[:, 5]
 
         # Calculate mean and std
-        if train_mean is None and train_std is None:
+        if name == "train":
             train_mean = np.mean(X, axis=(0, 1, 2))
             train_std = np.std(X, axis=(0, 1, 2))
 
@@ -43,6 +45,12 @@ if __name__ == '__main__':
 
         # Flatten image
         X = X.reshape(X.shape[0], -1)
+
+        # Use PCA to reduce dimensionality
+        if name == "train":
+            pca.fit(X)
+        X = pca.transform(X)
+        print(X.shape)
 
         # Save images
         np.save('../../data/book-dataset/img_standardized/X_' + name + '.npy', X)
