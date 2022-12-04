@@ -21,7 +21,7 @@ test = test.to_numpy()
 # Load images with multiprocessing
 def load_image(row):
     img = cv2.imread('../../data/book-dataset/img/' + row[1])
-    img = cv2.resize(img, (64, 64))
+    #  img = cv2.resize(img, (128, 128))
     return img
 
 
@@ -50,7 +50,7 @@ if __name__ == '__main__':
 
         # Use PCA to reduce dimensionality
         if name == "train":
-            pca.fit(X[:10000])
+            pca.fit(X)
         X = pca.transform(X)
         print(X.shape)
 
