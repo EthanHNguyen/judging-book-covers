@@ -6,7 +6,7 @@ import pandas as pd
 import numpy as np
 import cv2
 import multiprocessing as mp
-from sklearn.decomposition import PCA
+from sklearn.decomposition import PCA, IncrementalPCA
 
 # Load labels
 train = pd.read_csv('../../data/book-dataset/book30-listing-train-train.csv')
@@ -21,17 +21,19 @@ test = test.to_numpy()
 # Load images with multiprocessing
 def load_image(row):
     img = cv2.imread('../../data/book-dataset/img/' + row[1])
-    img = cv2.resize(img, (64, 64)) 
+    img = cv2.resize(img, (64, 64))
     return img
 
 
 if __name__ == '__main__':
     train_mean, train_std = None, None
-    pca = PCA(n_components=0.95)
+    pca = PCA(n_components=64, copy=False, svd_solver='randomized')
+    # pca = IncrementalPCA(n_components=16, batch_size=16)
     for data, name in [(train, "train"), (val, "val"), (test, "test")]:
         # Load images
         with mp.Pool(mp.cpu_count() * 4) as pool:
             X = pool.map(load_image, data)
+        print("Loaded images for " + name)
         X = np.array(X)
         Y = data[:, 5]
 
@@ -48,7 +50,7 @@ if __name__ == '__main__':
 
         # Use PCA to reduce dimensionality
         if name == "train":
-            pca.fit(X)
+            pca.fit(X[:10000])
         X = pca.transform(X)
         print(X.shape)
 

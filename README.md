@@ -13,7 +13,7 @@ To install the conda environment:
 conda env create -f environment.yaml
 conda activate book-covers
 ```
-
+500
 Other ideas to explore: 
 - Give image + title
 - Permutation-invariant neural networks

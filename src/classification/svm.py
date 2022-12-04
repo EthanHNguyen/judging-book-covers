@@ -17,8 +17,8 @@ X_train = np.load('../../data/book-dataset/img_standardized/X_train.npy')
 Y_train = np.load('../../data/book-dataset/img_standardized/Y_train.npy', allow_pickle=True).ravel().astype(np.uint8)
 
 
-X_train = X_train[:1000]
-Y_train = Y_train[:1000]
+# X_train = X_train[:1000]
+# Y_train = Y_train[:1000]
 
 X_val = np.load('../../data/book-dataset/img_standardized/X_val.npy')
 Y_val = np.load('../../data/book-dataset/img_standardized/Y_val.npy', allow_pickle=True).ravel().astype(np.uint8)
