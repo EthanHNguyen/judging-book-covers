@@ -1,5 +1,6 @@
 name: book-covers
 channels:
+  - conda-forge
   - defaults
 dependencies:
   - python
@@ -8,4 +9,10 @@ dependencies:
   - opencv
   - tqdm
   - scikit-learn
-prefix: /Users/ethannguyen/opt/anaconda3/envs/book-covers
+  - pytorch
+  - torchvision
+  - ca-certificates
+  - certifi
+  - openssl
+  - cython
+prefix: /home/ethan/miniconda3/envs/book-covers
