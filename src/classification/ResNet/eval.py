@@ -3,14 +3,10 @@ This file is used to evaluate the ResNet model on the test set.
 """
 import numpy as np
 import torch
-from torchvision.datasets import mnist
-from torch.nn import CrossEntropyLoss
-from torch.optim import SGD
 from torch.utils.data import DataLoader
 from torchvision.transforms import ToTensor
-import cv2
 
-from books import BookDataset
+from src.dataset.books import BookDataset
 
 img_dir = '../../../data/book-dataset/img/'
 
