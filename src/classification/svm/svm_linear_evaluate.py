@@ -22,23 +22,14 @@ if __name__ == "__main__":
     X_val = np.load('../../../data/book-dataset/img_standardized/X_val.npy')
     Y_val = np.load('../../../data/book-dataset/img_standardized/Y_val.npy', allow_pickle=True).ravel().astype(np.uint8)
 
-    # Create search grid
-    C_range = np.logspace(-3, 10, 13)
+    X_test = np.load('../../../data/book-dataset/img_standardized/X_test.npy')
+    Y_test = np.load('../../../data/book-dataset/img_standardized/Y_test.npy', allow_pickle=True).ravel().astype(np.uint8)
 
-    best_score = 0
-    best_params = {}
-    best_clf = None
-    for C in tqdm(C_range, desc="outer"):
-        clf = LinearSVC(C=C)
-        clf.fit(X_train, Y_train)
+    clf = LinearSVC(C=20, verbose=True)
+    clf.fit(X_train, Y_train)
 
-        acc = clf.score(X_val, Y_val)
-        if acc > best_score:
-            best_score = acc
-            best_params = {"C": C}
-            best_clf = clf
+    acc = clf.score(X_val, Y_val)
+    print("Validation:", acc)
 
-    print("Best score: {:.2f}".format(best_score))
-    print("Best parameters: {}".format(best_params))
-
-    s = pickle.dumps(best_clf)
+    acc = clf.score(X_test, Y_test)
+    print("Test:", acc)
