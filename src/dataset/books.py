@@ -5,6 +5,7 @@ import pandas as pd
 import numpy as np
 import cv2
 from torch.utils.data import Dataset
+from PIL import Image
 
 
 class BookDataset(Dataset):
@@ -19,8 +20,7 @@ class BookDataset(Dataset):
         return len(self.data)
 
     def __getitem__(self, idx):
-        img = cv2.imread(self.image_dir + self.data[idx][1])
-        img = img / 255.0
+        img = Image.open(self.image_dir + self.data[idx][1])
         label = self.data[idx][5]
 
         if self.transform:
