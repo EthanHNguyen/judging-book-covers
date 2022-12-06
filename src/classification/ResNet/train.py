@@ -7,11 +7,13 @@ from torch.utils.data import DataLoader
 import torchvision.models as models
 from torchvision import transforms
 
+from FCN_model import FCN
+
 from src.dataset.books import BookDataset
 
 img_dir = '../../../data/book-dataset/img/'
 
-# torch.backends.cudnn.benchmark = True
+torch.backends.cudnn.benchmark = True
 
 if __name__ == '__main__':
     # CUDA
@@ -35,9 +37,7 @@ if __name__ == '__main__':
     test_loader = DataLoader(test_dataset, batch_size=batch_size, pin_memory=True, shuffle=True, num_workers=4)
 
     # Model
-    model = models.resnet50(pretrained=True)
-    model.fc = nn.Linear(2048, 30)
-    print(model)
+    model = FCN()
     model.to(device)
 
     # Optimizer
@@ -67,19 +67,19 @@ if __name__ == '__main__':
                 print('idx: {}, loss: {}'.format(idx, loss.sum().item()))
 
         # Train accuracy
-        model.eval()
-        all_correct_num = 0
-        all_sample_num = 0
-        for idx, (test_x, test_label) in enumerate(train_loader):
-            test_x = test_x.to(device)
-
-            predict_y = model(test_x.float()).detach().to('cpu')
-            predict_y = np.argmax(predict_y, axis=-1)
-            current_correct_num = predict_y == test_label
-            all_correct_num += np.sum(current_correct_num.numpy(), axis=-1)
-            all_sample_num += current_correct_num.shape[0]
-        acc = all_correct_num / all_sample_num
-        print(f'Epoch {current_epoch}. Train accuracy: {acc:.3f}')
+        # model.eval()
+        # all_correct_num = 0
+        # all_sample_num = 0
+        # for idx, (test_x, test_label) in enumerate(train_loader):
+        #     test_x = test_x.to(device)
+        #
+        #     predict_y = model(test_x.float()).detach().to('cpu')
+        #     predict_y = np.argmax(predict_y, axis=-1)
+        #     current_correct_num = predict_y == test_label
+        #     all_correct_num += np.sum(current_correct_num.numpy(), axis=-1)
+        #     all_sample_num += current_correct_num.shape[0]
+        # acc = all_correct_num / all_sample_num
+        # print(f'Epoch {current_epoch}. Train accuracy: {acc:.3f}')
 
         # Validation accuracy
         all_correct_num = 0
@@ -94,4 +94,4 @@ if __name__ == '__main__':
             all_sample_num += current_correct_num.shape[0]
         acc = all_correct_num / all_sample_num
         print(f'Epoch {current_epoch}. Validation accuracy: {acc:.3f}')
-        torch.save(model, f'models/resnet-50/epoch_{current_epoch}.pth')
+        torch.save(model, f'models/fcn/epoch_{current_epoch}.pth')

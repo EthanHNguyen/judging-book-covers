@@ -24,11 +24,11 @@ if __name__ == '__main__':
     epoch = 10
 
     # Load the dataset
-    test_dataset = BookDataset('../../../data/book-dataset/book30-listing-train-val.csv', img_dir, transform=ToTensor())
+    test_dataset = BookDataset('../../../data/book-dataset/book30-listing-test.csv', img_dir, transform=ToTensor())
     test_loader = DataLoader(test_dataset, batch_size=batch_size, pin_memory=True, shuffle=True, num_workers=4)
 
     # Model
-    model = torch.load("models/resnet-18/epoch_9.000.pkl")
+    model = torch.load("models/fcn/epoch_9.pth")
     model.to(device)
 
     # Test accuracy
