@@ -1,15 +1,13 @@
 import numpy as np
 import torch
-from torch import nn
 from torch.nn import CrossEntropyLoss
 from torch.optim import SGD
 from torch.utils.data import DataLoader
-import torchvision.models as models
 from torchvision import transforms
 
-from FCN_model import FCN
+from src.classification.neural_networks.models.FCN_model import FCN
 
-from src.dataset.books import BookDataset
+from src.classification.neural_networks.dataset.books import BookDataset
 
 img_dir = '../../../data/book-dataset/img/'
 

@@ -6,7 +6,7 @@ import torch
 from torch.utils.data import DataLoader
 from torchvision.transforms import ToTensor
 
-from src.dataset.books import BookDataset
+from src.classification.neural_networks.dataset.books import BookDataset
 
 img_dir = '../../../data/book-dataset/img/'
 

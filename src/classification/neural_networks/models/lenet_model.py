@@ -6,9 +6,9 @@ from torch.nn import Module
 from torch import nn
 
 
-class Model(Module):
+class LeNetModel(Module):
     def __init__(self):
-        super(Model, self).__init__()
+        super(LeNetModel, self).__init__()
         self.conv1 = nn.Conv2d(3, 6, 5)
         self.relu1 = nn.ReLU()
         self.pool1 = nn.MaxPool2d(2)

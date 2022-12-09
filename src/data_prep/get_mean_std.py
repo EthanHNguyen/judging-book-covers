@@ -1,6 +1,6 @@
 import torch
-from torchvision import datasets, transforms as T
-from src.dataset.books import BookDataset
+from torchvision import transforms as T
+from src.classification.neural_networks.dataset.books import BookDataset
 from tqdm import tqdm
 
 transform = T.Compose([T.Resize(256), T.CenterCrop(224), T.ToTensor()])
